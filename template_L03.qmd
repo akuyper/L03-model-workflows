@@ -1,0 +1,256 @@
+---
+title: "L03 Model Workflows & Recipes"
+subtitle: "Data Science 2 with R (STAT 301-2)"
+author: "INSTRUCTIONS"
+
+format:
+  html:
+    toc: true
+    embed-resources: true
+    code-fold: show
+    link-external-newwindow: true
+    
+execute:
+  warning: false
+  
+from: markdown+emoji  
+---
+
+:::{.callout-important collapse=true}
+## When completing your lab write-up
+
+Students must work in an R project connected to a GitHub repository for each lab. The repository should be well organized and it should have all relevant files. Within the project/repo there should be
+
+- an appropriately named qmd file and 
+- the associated rendered html file (see canvas for naming convention);
+- there should be multiple R scripts (appropriately named and ordered) completing the work in the labs;
+- students should create/update README files in GitHub accordingly;
+
+Data processing and model fitting, especially model fitting, can take significant computational time. Re-running time consuming processes when rendering a document is extremely inefficient and must be avoided. 
+
+This means students should practice writing these processes in scripts, saving results, and then loading them correctly when needed in their lab write-ups. It sometimes will be necessary to display code (show it, but don't run it) or even hide some code chunks when providing answers in the lab write-up. 
+
+Remember to **make this document your own!** Meaning you should play with the layout and think about removing unnecessary sections or items (like this callout box block). Conversely you may end up adding sections or items. Make sure all of your solutions are clearly identified and communicated. 
+:::
+
+::: {.callout-tip icon=false}
+
+## Github Repo Link
+
+To link to your github **repo**sitory, appropriately edit the example link below. Meaning replace `https://your-github-repo-url` with your github repo url. Suggest verifying the link works before submitting.
+
+[https://your-github-repo-url](https://your-github-repo-url)
+
+:::
+
+## Overview
+
+The goal of this lab is to introduce the process of setting up a model workflow and adding a recipe.
+
+This lab accompanies [7. A model workflow](https://www.tmwr.org/workflows.html) and [8. Feature Engineering with recipes](https://www.tmwr.org/recipes.html) from [Tidy Modeling with R](https://www.tmwr.org/).
+
+::: {.callout-important collapse=true}
+
+## Setting a Seed
+
+Now that we are performing steps that involve randomness (for example data splitting and fitting random forest models) it is best practice to set a seed for the pseudo random algorithms. 
+
+**Why?** Because it ensures our random steps are reproducible which has all kinds of practical benefits. Kind of mind blowing to replicate things that are supposed to be random! 
+
+Students should set the seed directly before any random process and make a comment/note at the top of any R script that alerts potential users that a random process is being used.
+
+:::
+
+## Exercises
+
+We will be modifying and extending the work completed in L03. The work included specifying and fitting several models to predict home prices using the KC housing dataset (`data\kc_house_data.csv`). The dataset contains 21,613 house sale prices (`price`) and other information for homes sold between May 2014 and May 2015 in King County, WA.
+
+Code from L03 will likely be useful for reference and/or for building upon.
+
+### Exercise 1
+
+We are setting up our workflows for training predictive models so we should begin by setting up our training and testing sets.
+
+Begin by loading the data and making sure that in is minimally prepared for the fitting models. At minimum we should check that data is being read in correctly, variables are being typed correctly, and inspect the response/target variable (make adjustments if necessary).
+
+1. From L03 we know that we will want to perform a $log_{10}$ transformation of our outcome variable.
+2. We will want to re-type several variables as factors: `waterfront` (nominal/un-ordered), `view` (ordered), `condition` (ordered), and `grade` (ordered).
+
+Now perform an initial split of the dataset into testing and training sets using the `rsample` package. We suggest using strata when splitting because it is rarely a bad idea. Use the default number of strata. 
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+*Hint: Code should be set up and run in an R Script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
+
+:::
+
+What is the default number of strata used? 
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 2
+
+Define 4 model types:
+
+- Ordinary linear regression
+- Regularized/penalized linear regression (elastic net `glmnet`) with `mixture = 1`, which is called lasso regression, with `penalty = 0.01`.
+- Regularized/penalized linear regression (elastic net `glmnet`) with `mixture = 0` which is called ridge regression, with `penalty = 0.01`.
+- Random forest model using `ranger` with `trees = 500` and `min_n = 5`
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+*Hint: Code should be set up and run in an R Script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
+
+:::
+
+### Exercise 3
+
+We will now define our recipe and set up our workflow that will allow us to fit our model to our training data and predict on our testing data.
+
+#### Task 1
+
+Define a recipe that uses `waterfront`, `sqft_living`, `yr_built`, and `bedrooms` to predict the target/outcome variable. Add a `step_dummy()` to handle your factor variables.
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+*Hint: Code should be set up and run in an R Script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
+
+:::
+
+#### Task 2
+
+Create a workflow that adds the model specifications and the recipe. There should be 4 workflows, one for each model type. 
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+*Hint: Code should be set up and run in an R Script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
+
+:::
+
+#### Task 3
+
+Train each workflow by fitting the workflow object to the training data. Compare each of the fitted models (except the random forest model) using `broom::tidy()`. Output is not enough, you should write a few sentences.
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+*Hint: Likely loading saved results here. Suggest hiding the reading in of results.*
+
+:::
+
+#### Task 4
+
+Evaluate which of the 4 workflows is best by using `predict()` and calculating the RMSE.
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+*Hint: Likely loading saved results here. Suggest hiding the reading in of results.*
+
+:::
+
+### Exercise 4
+
+The `tidymodels` workflow makes it easy to fit your data to a new recipe or modify an existing recipe. 
+
+You only need to complete this Exercise with **ONE** model type (ols, lasso, ridge, or random forest). This time we will be using `waterfront`, `sqft_living`, `sqft_lot`, `bedrooms`, `lat`, and `date` as our predictors.
+
+#### Task 1
+
+First we will pre-process the data by visualizing relationships to determine if a transformation is necessary. 
+
+- Visualize the relationship of the outcome variable with `sqft_lot` and `lat`. 
+- What could an appropriate transformation be for those variables?
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+#### Task 2
+
+Define a recipe that uses `waterfront`, `sqft_living`, `sqft_lot`, `bedrooms`, `lat`, and `date` to predict the target/outcome variable. 
+
+- Add a step to transform dummy variables
+- Add a step that does an appropriate transformation on `lat`
+- Add a step that does an appropriate transformation on `sqft_lot`
+- Add a step that extracts the `"month"` feature from `date`; we only want to use the month feature from `date` for prediction and nothing else 
+
+Check that the recipe is working as expected by applying it to the training data. Explain how we know the recipe is working as expected. 
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+*Hint: Code should be set up and run in an R Script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
+
+:::
+
+#### Task 3
+
+Define and fit a new workflow using your choice of model specification (1 of the 4 previous defined) and the new recipe from Task 2.
+
+Evaluate the new workflow by using `predict()` and calculating the RMSE. How does the new workflow's RMSE compare to RMSEs for the previous workflows? Did the new recipe make a difference?
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+#### Task 4
+
+What proportion or percentage of the predicted prices are within 25% of the original price on the testing set? Is this value surprising or not surprising to you? Explain.
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+
+## Graduate Challenge
+
+::: callout-important
+
+Graduate students are required to complete this challenge. **It is optional for undergraduate students.**
+
+:::
+
+
+Set up a workflow set using the `workflowsets` package that would cover all the work necessary for Exercise 2. 
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+*Hint: Code should be set up and run in an R Script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
+
+:::
