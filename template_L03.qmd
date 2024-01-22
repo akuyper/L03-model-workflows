@@ -63,9 +63,9 @@ Students should set the seed directly before any random process and make a comme
 
 ## Exercises
 
-We will be modifying and extending the work completed in L03. The work included specifying and fitting several models to predict home prices using the KC housing dataset (`data\kc_house_data.csv`). The dataset contains 21,613 house sale prices (`price`) and other information for homes sold between May 2014 and May 2015 in King County, WA.
+We will be modifying and extending the work completed in L02. The work included specifying and fitting several models to predict home prices using the KC housing dataset (`data\kc_house_data.csv`). The dataset contains 21,613 house sale prices (`price`) and other information for homes sold between May 2014 and May 2015 in King County, WA.
 
-Code from L03 will likely be useful for reference and/or for building upon.
+Code from L02 will likely be useful for reference and/or for building upon.
 
 ### Exercise 1
 
@@ -73,7 +73,7 @@ We are setting up our workflows for training predictive models so we should begi
 
 Begin by loading the data and making sure that in is minimally prepared for the fitting models. At minimum we should check that data is being read in correctly, variables are being typed correctly, and inspect the response/target variable (make adjustments if necessary).
 
-1. From L03 we know that we will want to perform a $log_{10}$ transformation of our outcome variable.
+1. From L02 we know that we will want to perform a $log_{10}$ transformation of our outcome variable.
 2. We will want to re-type several variables as factors: `waterfront` (nominal/un-ordered), `view` (ordered), `condition` (ordered), and `grade` (ordered).
 
 Now perform an initial split of the dataset into testing and training sets using the `rsample` package. We suggest using strata when splitting because it is rarely a bad idea. Use the default number of strata. 
