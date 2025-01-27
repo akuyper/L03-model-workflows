@@ -1,19 +1,26 @@
 ---
 title: "L03 Model Workflows & Recipes"
 subtitle: "Data Science 2 with R (STAT 301-2)"
-author: "INSTRUCTIONS"
+author: "YOUR NAME"
+pagetitle: "L03 YOUR NAME"
+date: today
 
 format:
   html:
+    theme: cosmo
     toc: true
+    toc-depth: 4
+    toc-location: left
     embed-resources: true
-    code-fold: show
+    code-fold: false
     link-external-newwindow: true
-    
+
 execute:
   warning: false
-  
-from: markdown+emoji  
+
+from: markdown+emoji
+reference-location: margin
+citation-location: margin
 ---
 
 :::{.callout-important collapse=true}
@@ -74,16 +81,18 @@ We are setting up our workflows for training predictive models so we should begi
 Begin by loading the data and making sure that in is minimally prepared for the fitting models. At minimum we should check that data is being read in correctly, variables are being typed correctly, and inspect the response/target variable (make adjustments if necessary).
 
 1. From L02 we know that we will want to perform a $log_{10}$ transformation of our outcome variable.
-2. We will want to re-type several variables as factors: `waterfront` (nominal/un-ordered), `view` (ordered), `condition` (ordered), and `grade` (ordered).
+2. We will want to re-type several variables as nominal/un-ordered factors: `waterfront`, `view`, `condition`, and `grade`.
 
 Now perform an initial split of the dataset into testing and training sets using the `rsample` package. We suggest using strata when splitting because it is rarely a bad idea. Use the default number of strata. 
+
+What is the default number of strata used? 
 
 ::: {.callout-tip icon="false"}
 ## Solution
 
 YOUR SOLUTION HERE
 
-*Hint: Code should be set up and run in an R Script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
+*Hint: Code should be set up and run in an R script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
 
 :::
 
@@ -110,7 +119,7 @@ Define 4 model types:
 
 YOUR SOLUTION HERE
 
-*Hint: Code should be set up and run in an R Script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
+*Hint: Code should be set up and run in an R script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
 
 :::
 
@@ -120,27 +129,27 @@ We will now define our recipe and set up our workflow that will allow us to fit 
 
 #### Task 1
 
-Define a recipe that uses `waterfront`, `sqft_living`, `yr_built`, and `bedrooms` to predict the target/outcome variable. Add a `step_dummy()` to handle your factor variables.
+Define a recipe that uses `waterfront`, `sqft_living`, `yr_built`, and `bedrooms` to predict the target/outcome variable. Add a `step_dummy()` to handle your factor variabl(s).
 
 ::: {.callout-tip icon="false"}
 ## Solution
 
 YOUR SOLUTION HERE
 
-*Hint: Code should be set up and run in an R Script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
+*Hint: Code should be set up and run in an R script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
 
 :::
 
 #### Task 2
 
-Create a workflow that adds the model specifications and the recipe. There should be 4 workflows, one for each model type. 
+Create a workflow that combines the model specifications and the recipe. There should be 4 workflows, one for each model type. 
 
 ::: {.callout-tip icon="false"}
 ## Solution
 
 YOUR SOLUTION HERE
 
-*Hint: Code should be set up and run in an R Script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
+*Hint: Code should be set up and run in an R script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
 
 :::
 
@@ -166,7 +175,7 @@ Evaluate which of the 4 workflows is best by using `predict()` and calculating t
 
 YOUR SOLUTION HERE
 
-*Hint: Likely loading saved results here. Suggest hiding the reading in of results.*
+*Hint: Should be using/loading saved results. Suggest hiding the loading of results.*
 
 :::
 
@@ -206,7 +215,7 @@ Check that the recipe is working as expected by applying it to the training data
 
 YOUR SOLUTION HERE
 
-*Hint: Code should be set up and run in an R Script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
+*Hint: Code should be set up and run in an R script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
 
 :::
 
@@ -251,6 +260,6 @@ Set up a workflow set using the `workflowsets` package that would cover all the 
 
 YOUR SOLUTION HERE
 
-*Hint: Code should be set up and run in an R Script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
+*Hint: Code should be set up and run in an R script. Include the necessary __display__ code to demonstrate you have completed what was asked.*
 
 :::
