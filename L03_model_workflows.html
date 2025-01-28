@@ -3317,7 +3317,7 @@ Setting a Seed
 <p>Begin by loading the data and making sure that in is minimally prepared for the fitting models. At minimum we should check that data is being read in correctly, variables are being typed correctly, and inspect the response/target variable (make adjustments if necessary).</p>
 <ol type="1">
 <li>From L02 we know that we will want to perform a <span class="math inline">\(log_{10}\)</span> transformation of our outcome variable.</li>
-<li>We will want to re-type several variables as factors: <code>waterfront</code> (nominal/un-ordered), <code>view</code> (ordered), <code>condition</code> (ordered), and <code>grade</code> (ordered).</li>
+<li>We will want to re-type several variables as nominal/un-ordered factors: <code>waterfront</code>, <code>view</code>, <code>condition</code>, and <code>grade</code>.</li>
 </ol>
 <p>Now perform an initial split of the dataset into testing and training sets using the <code>rsample</code> package. We suggest using strata when splitting because it is rarely a bad idea. Use the default number of strata.</p>
 <p>What is the default number of strata used?</p>
@@ -3337,11 +3337,11 @@ Setting a Seed
 <p>We will now define our recipe and set up our workflow that will allow us to fit our model to our training data and predict on our testing data.</p>
 <section id="task-1" class="level4">
 <h4 class="anchored" data-anchor-id="task-1">Task 1</h4>
-<p>Define a recipe that uses <code>waterfront</code>, <code>sqft_living</code>, <code>yr_built</code>, and <code>bedrooms</code> to predict the target/outcome variable. Add a <code>step_dummy()</code> to handle your factor variables.</p>
+<p>Define a recipe that uses <code>waterfront</code>, <code>sqft_living</code>, <code>yr_built</code>, and <code>bedrooms</code> to predict the target/outcome variable. Add a <code>step_dummy()</code> to handle your factor variabl(s).</p>
 </section>
 <section id="task-2" class="level4">
 <h4 class="anchored" data-anchor-id="task-2">Task 2</h4>
-<p>Create a workflow that adds the model specifications and the recipe. There should be 4 workflows, one for each model type.</p>
+<p>Create a workflow that combines the model specifications and the recipe. There should be 4 workflows, one for each model type.</p>
 </section>
 <section id="task-3" class="level4">
 <h4 class="anchored" data-anchor-id="task-3">Task 3</h4>
